@@ -1,32 +1,45 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
+# Игнорирай компилирани файлове (например .obj, .o, .exe, .dll, .out, .a, .lib)
 *.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
+*.o
+*.exe
 *.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
+*.out
+*.so
 *.a
 *.lib
 
-# Executables
-*.exe
-*.out
-*.app
+# Игнорирай файлове, генерирани от IDE-та
+.vs/
+.idea/
+.vscode/
+
+# Игнорирай конфигурационни файлове на Visual Studio
+.vsconfig
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Игнорирай временни файлове на компилатора
+*.pch
+*.pdb
+*.idb
+*.ipch
+*.log
+
+# Игнорирай CMake файлове (ако използваш CMake)
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+
+# Игнорирай директории с билд файлове
+bin/
+build/
+Debug/
+Release/
+
+# Игнорирай профили и отчети
+*.gcda
+*.gcno
+*.prof
