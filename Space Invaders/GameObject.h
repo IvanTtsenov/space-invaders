@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "visualisation.cpp"
+#include "visualisation.h"
 using namespace std;
 class GameObject
 {
