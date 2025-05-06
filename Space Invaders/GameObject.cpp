@@ -1,10 +1,66 @@
 #include "GameObject.h"
+#include <iostream>
 GameObject::GameObject() {};
+
+GameObject::GameObject(GameObject& obj) {
+	this->x = obj.x;
+	this->y = obj.y;
+	this->symbol = obj.symbol;
+	this->color = obj.color;
+}
+
+GameObject& GameObject::operator=(const GameObject& other) {
+	if (this != &other) {
+		x = other.x;
+		y = other.y;
+		symbol = other.symbol;
+		color = other.color;
+	}
+	return *this;
+}
+
+void GameObject::setX(int x) {
+	this->x = x;
+}
+
+int GameObject::getX() const {
+	return x;
+}
+
+void GameObject::setY(int y) {
+	this->y = y;
+}
+
+int GameObject::getY() const {
+	return y;
+}
+
+void GameObject::setSymbol(char symbol) {
+	 this->symbol = symbol;
+}
+
+char GameObject::getSymbol() const {
+	return symbol;
+}
 
 void GameObject::update() {
 	// Update logic for GameObject
 }
 
+void GameObject::setColor(COLORS color) {
+	this->color = color;
+}
+
+COLORS GameObject::getColor() const {
+	return color;
+}
+
 void GameObject::render() {
-	// Render logic for GameObject
+	// Render logic for 
+	setSymbol('A');
+	setX(118/2);
+	setY(29);
+	setColor(GREEN);
+	draw_char(getSymbol(), getY(), getX(), getColor(), BLACK);
+	std::cout << "Rendering GameObject at (" << getX() << ", " << getY() << ") with symbol: " << getSymbol() << std::endl;
 }

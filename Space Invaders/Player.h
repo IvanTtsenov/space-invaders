@@ -1,18 +1,11 @@
 #pragma once
-class Player
+#include "GameObject.h"
+class Player : public GameObject
 {
 public:
 	Player();
-	Player(Player& obj);
-	Player& operator=(const Player& other)
-	{
-		if (this != &other)
-		{
-			lives = other.lives;
-			score = other.score;
-		}
-		return *this;
-	}
+	Player(const Player& obj);
+	Player& operator=(const Player& other);
 
 	Player operator+(int points) const;
 	Player operator-(int points) const;
@@ -26,6 +19,7 @@ public:
 
 	void setLives(int lives);
 	void setScore(int score);
+	void render() override;
 private:
 	int lives;
 	int score;

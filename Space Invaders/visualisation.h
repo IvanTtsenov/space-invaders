@@ -1,7 +1,9 @@
 #pragma once
 #include <windows.h>
+const int POLE_ROWS = 90;
+const int POLE_COLS = 180;
 
-extern HANDLE hConsoleOutput;  // Declaration only
+extern HANDLE hConsoleOutput;
 
 enum COLORS {
     BLACK = 0,
@@ -22,5 +24,4 @@ enum COLORS {
     WHITE = FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY
 };
 
-// Declaration only
 void draw_char(char ch, int y, int x, COLORS foreground_color, COLORS background_color);

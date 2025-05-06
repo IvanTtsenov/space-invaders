@@ -1,7 +1,7 @@
 #include "visualisation.h"
 #include <iostream>
 
-HANDLE hConsoleOutput = ::GetStdHandle(STD_OUTPUT_HANDLE); // Definition
+HANDLE hConsoleOutput = ::GetStdHandle(STD_OUTPUT_HANDLE);
 
 void draw_char(char ch, int y, int x, COLORS foreground_color, COLORS background_color) {
     CHAR_INFO ch_info;

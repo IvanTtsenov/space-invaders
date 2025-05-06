@@ -1,5 +1,6 @@
 #pragma once
-class Bullet
+#include "GameObject.h"
+class Bullet : public GameObject
 {
 public:
 	Bullet();
