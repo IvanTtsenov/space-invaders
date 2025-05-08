@@ -1,8 +1,10 @@
 #include "Player.h"
-#include <conio.h>
 #include <iostream>
+#include "Bullet.h"
+#include "visualisation.h"
 using namespace std;
-Player::Player() {};
+Player::Player() {
+};
 
 Player::Player(const Player& obj) {
 	this->lives = obj.lives;
@@ -38,13 +40,14 @@ void Player::moveLeft() {
 }
 
 void Player::moveRight() {
-	if (getX() < 118) { // Check if not at the right edge
+	if (getX() < POLE_COLS) { // Check if not at the right edge
 		setX(getX() + 1); // Move right
 	}
 }
 
 void Player::shoot() {
-	// Logic to shoot
+	Bullet b;
+	b.render();
 }
 
 int Player::getLives() const {
@@ -65,21 +68,4 @@ void Player::setScore(int score) {
 
 void Player::render() {
 	draw_char(getSymbol(), getY(), getX(), getColor(), BLACK);
-
-	while (true) {
-	if (_kbhit()) {
-		int key = _getch();
-		if (key == 224) {        // First code for arrow keys
-			key = _getch();      // Second code tells which arrow
-			if (key == 75) {
-				moveLeft(); // Move right
-			}
-			else if (key == 77) {
-				moveRight();
-
-			}
-		}
-		draw_char(getSymbol(), getY(), getX(), getColor(), BLACK);
 	}
-	}
-}

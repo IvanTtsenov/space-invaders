@@ -17,7 +17,12 @@ public:
 	void render();
 	void run();
 
-
+	void setRunning(bool running);
+	bool isRunning() const;
+	void setScore(int score);
+	int getScore() const;
+	void setLevel(int level);
+	int getLevel() const;
 
 private:
 	Player player;

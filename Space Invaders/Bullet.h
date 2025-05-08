@@ -5,17 +5,13 @@ class Bullet : public GameObject
 public:
 	Bullet();
 	Bullet(Bullet& obj);
-	Bullet& operator=(const Bullet& other)
-	{
-		if (this != &other)
-		{
-			direction = other.direction;
-		}
-		return *this;
-	}
+	Bullet& operator=(const Bullet& other);
 
 	void update();
-	void render();
+	void render() override;
+
+	int getDirection() const;
+	void setDirection(int direction);
 
 private:
 	int direction;

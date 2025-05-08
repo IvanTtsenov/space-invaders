@@ -1,6 +1,11 @@
 #include "GameObject.h"
 #include <iostream>
-GameObject::GameObject() {};
+GameObject::GameObject() {
+	setSymbol('A');
+	setX(118 / 2);
+	setY(29);
+	setColor(GREEN);
+};
 
 GameObject::GameObject(GameObject& obj) {
 	this->x = obj.x;
@@ -57,10 +62,6 @@ COLORS GameObject::getColor() const {
 
 void GameObject::render() {
 	// Render logic for 
-	setSymbol('A');
-	setX(118/2);
-	setY(29);
-	setColor(GREEN);
 	draw_char(getSymbol(), getY(), getX(), getColor(), BLACK);
 	std::cout << "Rendering GameObject at (" << getX() << ", " << getY() << ") with symbol: " << getSymbol() << std::endl;
 }

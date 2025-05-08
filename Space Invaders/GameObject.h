@@ -16,8 +16,8 @@ public:
     char getSymbol() const;
 	COLORS getColor() const;
 
-    void setX(int x);
-    void setY(int y);
+    void setX( int x);
+    void setY( int y);
     void setSymbol(char symbol);
 	void setColor(COLORS color);
 private:
