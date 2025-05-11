@@ -1,10 +1,13 @@
 #include "Player.h"
 #include <iostream>
-#include "Bullet.h"
 #include "visualisation.h"
 using namespace std;
 Player::Player() {
 };
+
+GameObject::~GameObject() {
+	// Destructor implementation
+}
 
 Player::Player(const Player& obj) {
 	this->lives = obj.lives;
@@ -44,10 +47,10 @@ void Player::moveRight() {
 		setX(getX() + 1); // Move right
 	}
 }
-
-void Player::shoot() {
-	Bullet b;
-	b.render();
+ 
+Bullet* Player::shoot() {
+	return new Bullet(); // Shoot upwards
+	//b.render();
 }
 
 int Player::getLives() const {
@@ -68,4 +71,4 @@ void Player::setScore(int score) {
 
 void Player::render() {
 	draw_char(getSymbol(), getY(), getX(), getColor(), BLACK);
-	}
+}

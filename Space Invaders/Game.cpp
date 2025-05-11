@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "visualisation.h"
 #include "Bullet.h"
+#include "Player.h"
 Game::Game() {
 	player.render();
 }
@@ -45,7 +46,6 @@ void Game::initializeEnemies() {
 }
 
 void Game::input() {
-	while (true) {
 		if (_kbhit()) {
 			int key = _getch();
 			if (key == 224) {        // First code for arrow keys
@@ -57,8 +57,7 @@ void Game::input() {
 					player.moveRight();
 				}
 				else if (key == 72) {
-					player.shoot();
-				}
+					bullets.push_back(player.shoot());
 			}
 			//cout << "Player at " << "Symbol: " << player.getSymbol() << "Y: " << player.getY() << "X: " << player.getX() << "Color: " << player.getColor() << endl;
 
@@ -68,6 +67,23 @@ void Game::input() {
 }
 
 void Game::update() {
+	for (auto b : bullets) {
+		b->update();
+	}
+	bullets.clear();
+	//bullets.erase(
+	//	std::remove_if(bullets.begin(), bullets.end(), [](Bullet* b) {
+	//		if (b->getY() < 0) {
+	//			delete b;
+	//			return true;
+	//		}
+	//		return false;
+	//		}),
+	//	bullets.end()
+	//);
+	//for (auto b : enemies) {
+	//	b->update();
+	//}
 }
 
 void Game::checkCollisions() {
@@ -76,10 +92,6 @@ void Game::checkCollisions() {
 
 void Game::render() {
 	player.render();
-	
-	for (auto b : enemies) {
-		b->render();
-	}
 }
 
 void Game::run()

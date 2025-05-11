@@ -8,6 +8,7 @@ public:
     GameObject();
     GameObject(GameObject& obj);
     GameObject& operator=(const GameObject& other);
+    virtual ~GameObject();
 
     virtual void update();
     virtual void render();

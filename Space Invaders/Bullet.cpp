@@ -1,6 +1,31 @@
 #include "Bullet.h"
 #include <iostream>
-Bullet::Bullet() {};
+Bullet::Bullet() {
+	setSymbol('^');
+	setColor(RED);
+	//setY(getY() - 1);
+	//setX(getX());
+};
+
+Bullet::Bullet(int x, int y, int direction, char symbol) : GameObject() {
+	setSymbol(symbol);
+	setColor(RED);
+	setY(y);
+	setX(x);
+	this->direction = direction;
+	if (direction == 1) {
+		setY(getY() - 1);
+	}
+	else if (direction == 2) {
+		setY(getY() + 1);
+	}
+	else if (direction == 3) {
+		setX(getX() - 1);
+	}
+	else if (direction == 4) {
+		setX(getX() + 1);
+	}
+}
 
 Bullet::Bullet(Bullet& obj) {
 	this->direction = obj.direction;
@@ -22,20 +47,19 @@ void Bullet::setDirection(int direction) {
 }
 
 void Bullet::render() {
-	while (getY() > 0) {
-	setSymbol('^');
-	setColor(RED);
-	setY(getY() - 1);
-	setX(getX());
-	//cout << "Bullet fired! at " << "Symbol: " << getSymbol() << "Y: " << getY() << "X: " << getX() << "Color: " << getColor() << endl;
-	update();
-	Sleep(100);
-	draw_char(getSymbol(), getY(), getX(), BLACK, BLACK);
-	}
-	draw_char(getSymbol(), getY(), getX(), BLACK, BLACK);
-
+	//setX(getX());
+	cout << "Bullet at " << "Symbol: " << getSymbol() << " Y: " << getY() << " X: " << getX() << " Color: " << getColor() << endl;
+	draw_char(getSymbol(), getY(), getX(), getColor(), BLACK);
 }
 
 void Bullet::update() {
-	draw_char(getSymbol(), getY(), getX(), getColor(), BLACK);
+
+	render();
+	Sleep(100);
+	if (getY() >= 0) {
+		//cout << "Bullet fired! at " << "Symbol: " << getSymbol() << " Y: " << getY() << " X: " << getX() << " Color: " << getColor() << endl;
+
+		draw_char(' ', getY(), getX(), BLACK, BLACK);
+		setY(getY() - 1);
+	}
 }

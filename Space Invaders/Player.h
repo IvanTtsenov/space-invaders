@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Bullet.h"
 class Player : public GameObject
 {
 public:
@@ -12,7 +13,7 @@ public:
 
 	void moveLeft();
 	void moveRight();
-	void shoot();
+	Bullet* shoot();
 
 	int getLives() const;
 	int getScore() const;
