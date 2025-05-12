@@ -50,7 +50,6 @@ void Player::moveRight() {
  
 Bullet* Player::shoot() {
 	return new Bullet(); // Shoot upwards
-	//b.render();
 }
 
 int Player::getLives() const {
@@ -70,5 +69,5 @@ void Player::setScore(int score) {
 }
 
 void Player::render() {
-	draw_char(getSymbol(), getY(), getX(), getColor(), BLACK);
+	draw_char(getSymbol(), getY(), getX(), getColor(), BACKGROUND_COLOR);
 }

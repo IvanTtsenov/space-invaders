@@ -4,7 +4,6 @@ class Bullet : public GameObject
 {
 public:
 	Bullet();
-	Bullet(int x, int y, int direction, char symbol = '|');
 	Bullet(Bullet& obj);
 	Bullet& operator=(const Bullet& other);
 

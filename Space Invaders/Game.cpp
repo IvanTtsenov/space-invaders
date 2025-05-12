@@ -48,42 +48,44 @@ void Game::initializeEnemies() {
 void Game::input() {
 		if (_kbhit()) {
 			int key = _getch();
-			if (key == 224) {        // First code for arrow keys
-				key = _getch();      // Second code tells which arrow
+			if (key == 'a' || key == 'A') {
+				player.moveLeft();
+			}
+			else if (key == 'd' || key == 'D') {
+				player.moveRight();
+			}
+			else if (key == ' ' || key == 'w' || key == 'W') {
+				bullets.push_back(player.shoot());
+			}
+			if (key == 224) { 
+				key = _getch();
 				if (key == 75) {
-					player.moveLeft(); // Move right
+					player.moveLeft();
 				}
 				else if (key == 77) {
 					player.moveRight();
 				}
 				else if (key == 72) {
 					bullets.push_back(player.shoot());
-			}
-			//cout << "Player at " << "Symbol: " << player.getSymbol() << "Y: " << player.getY() << "X: " << player.getX() << "Color: " << player.getColor() << endl;
 
-			draw_char(player.getSymbol(), player.getY(), player.getX(), player.getColor(), BLACK);
+			}
+			draw_char(player.getSymbol(), player.getY(), player.getX(), player.getColor(), BACKGROUND_COLOR);
 		}
 	}
 }
 
 void Game::update() {
-	for (auto b : bullets) {
+	for (auto it = bullets.begin(); it != bullets.end(); ) {
+		auto b = *it;
 		b->update();
+		if (b->getY() < 0) {
+			delete b;
+			it = bullets.erase(it);
+		}
+		else {
+			++it; 
+		}
 	}
-	bullets.clear();
-	//bullets.erase(
-	//	std::remove_if(bullets.begin(), bullets.end(), [](Bullet* b) {
-	//		if (b->getY() < 0) {
-	//			delete b;
-	//			return true;
-	//		}
-	//		return false;
-	//		}),
-	//	bullets.end()
-	//);
-	//for (auto b : enemies) {
-	//	b->update();
-	//}
 }
 
 void Game::checkCollisions() {
@@ -96,14 +98,13 @@ void Game::render() {
 
 void Game::run()
 {
-	Game game;
 	setRunning(true);
 	while (isRunning())
 	{
-		game.render();
-		game.input();
-		game.update();
-		game.checkCollisions();
-		game.initializeEnemies();
+		render();
+		input();
+		update();
+		checkCollisions();
+		initializeEnemies();
 	}
 }

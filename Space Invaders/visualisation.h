@@ -23,4 +23,6 @@ enum COLORS {
     WHITE = FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY
 };
 
+const COLORS BACKGROUND_COLOR = BLACK;
+
 void draw_char(char ch, int y, int x, COLORS foreground_color, COLORS background_color);

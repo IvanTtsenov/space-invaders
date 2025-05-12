@@ -62,6 +62,6 @@ COLORS GameObject::getColor() const {
 
 void GameObject::render() {
 	// Render logic for 
-	draw_char(getSymbol(), getY(), getX(), getColor(), BLACK);
+	draw_char(getSymbol(), getY(), getX(), getColor(), BACKGROUND_COLOR);
 	std::cout << "Rendering GameObject at (" << getX() << ", " << getY() << ") with symbol: " << getSymbol() << std::endl;
 }
