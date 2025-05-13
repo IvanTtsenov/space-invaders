@@ -98,6 +98,7 @@ void Game::render() {
 
 void Game::run()
 {
+	cout << "Score: " << player.getScore()<<"            "<< "Lives: " << player.getLives() << endl;
 	setRunning(true);
 	while (isRunning())
 	{
@@ -106,5 +107,6 @@ void Game::run()
 		update();
 		checkCollisions();
 		initializeEnemies();
+		Sleep(10);
 	}
 }

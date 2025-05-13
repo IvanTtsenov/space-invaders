@@ -29,11 +29,10 @@ void Bullet::render() {
 }
 
 void Bullet::update() {
+	draw_char(' ', getY(), getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
 
-	render();
-	Sleep(100);
 	if (getY() >= 0) {
-		draw_char(' ', getY(), getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
-		setY(getY() - 1);
+		setY(getY() + getDirection());
 	}
+	render();
 }

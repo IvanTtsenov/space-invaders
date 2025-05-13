@@ -1,11 +1,15 @@
 #include "GameObject.h"
 #include <iostream>
+
 GameObject::GameObject() {
 	setSymbol('A');
 	setX(118 / 2);
 	setY(29);
 	setColor(GREEN);
 };
+
+GameObject::~GameObject() {
+}
 
 GameObject::GameObject(GameObject& obj) {
 	this->x = obj.x;

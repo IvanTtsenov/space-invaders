@@ -5,10 +5,6 @@ using namespace std;
 Player::Player() {
 };
 
-GameObject::~GameObject() {
-	// Destructor implementation
-}
-
 Player::Player(const Player& obj) {
 	this->lives = obj.lives;
 	this->score = obj.score;
@@ -48,8 +44,16 @@ void Player::moveRight() {
 	}
 }
  
+//Bullet* Player::shoot() {
+//	return new Bullet(); // Shoot upwards
+//}
+
 Bullet* Player::shoot() {
-	return new Bullet(); // Shoot upwards
+	Bullet* b = new Bullet();
+	b->setX(this->getX());     
+	b->setY(this->getY() - 1);  
+	b->setDirection(-1);
+	return b;
 }
 
 int Player::getLives() const {
