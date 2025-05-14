@@ -3,6 +3,11 @@
 #include "visualisation.h"
 using namespace std;
 Player::Player() {
+	setSymbol('A');
+	setX(118 / 2);
+	setY(29);
+	setColor(GREEN);
+	setLives(3);
 };
 
 Player::Player(const Player& obj) {

@@ -30,9 +30,9 @@ void Bullet::render() {
 
 void Bullet::update() {
 	draw_char(' ', getY(), getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
+	setY(getY() + getDirection());
 
-	if (getY() >= 0) {
-		setY(getY() + getDirection());
+	if (getY() >= 2) {
+		render();
 	}
-	render();
 }

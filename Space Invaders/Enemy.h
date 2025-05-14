@@ -5,17 +5,12 @@ class Enemy : public GameObject
 public:
 	Enemy();
 	Enemy(Enemy& obj);
-	Enemy& operator=(const Enemy& other)
-	{
-		if (this != &other)
-		{
-			direction = other.direction;
-		}
-		return *this;
-	}
-
+	Enemy& operator=(const Enemy& other);
+	Enemy* createEnemies();
 	void update();
 	void render();
+	int getDirection() const;
+	void setDirection(int direction);
 
 private:
 	int direction;

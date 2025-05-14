@@ -25,6 +25,7 @@ public:
 	int getLevel() const;
 
 private:
+	Enemy enemy;
 	Player player;
 	vector<GameObject*> enemies;
 	vector<GameObject*> bullets;

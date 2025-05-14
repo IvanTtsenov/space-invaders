@@ -5,7 +5,7 @@
 #include "Bullet.h"
 #include "Player.h"
 Game::Game() {
-	player.render();
+	setLevel(1);
 }
 
 Game::Game(Game& obj) {
@@ -42,8 +42,11 @@ int Game::getLevel() const {
 }
 
 void Game::initializeEnemies() {
-	// Initialize enemies here
+	if (enemies.empty()) {
+		enemies.push_back(enemy.createEnemies());
+	}
 }
+
 
 void Game::input() {
 		if (_kbhit()) {
@@ -78,7 +81,7 @@ void Game::update() {
 	for (auto it = bullets.begin(); it != bullets.end(); ) {
 		auto b = *it;
 		b->update();
-		if (b->getY() < 0) {
+		if (b->getY() < 2) {
 			delete b;
 			it = bullets.erase(it);
 		}
@@ -86,7 +89,19 @@ void Game::update() {
 			++it; 
 		}
 	}
-}
+
+		for (auto it = enemies.begin(); it != enemies.end(); ) {
+			auto e = *it;
+			e->update();
+			if (e->getY() > 29) {
+				delete e;
+				it = enemies.erase(it);
+			}
+			else {
+				++it;
+			}
+		}
+	}
 
 void Game::checkCollisions() {
 	// Check for collisions here
@@ -98,7 +113,8 @@ void Game::render() {
 
 void Game::run()
 {
-	cout << "Score: " << player.getScore()<<"            "<< "Lives: " << player.getLives() << endl;
+	cout <<"Level: " << getLevel() << string((118 - 36) / 2, ' ') << "Score: " << player.getScore() << "     " << "Lives: " << player.getLives() << endl;
+	cout << string(118, '-') << endl;
 	setRunning(true);
 	while (isRunning())
 	{
