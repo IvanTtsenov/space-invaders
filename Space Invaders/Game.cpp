@@ -1,11 +1,15 @@
 #include <iostream>
 #include <conio.h>
+#include <cstdlib>
+#include <ctime>
 #include "Game.h"
 #include "visualisation.h"
 #include "Bullet.h"
 #include "Player.h"
+
 Game::Game() {
 	setLevel(1);
+
 }
 
 Game::Game(Game& obj) {
@@ -42,9 +46,13 @@ int Game::getLevel() const {
 }
 
 void Game::initializeEnemies() {
-	if (enemies.empty()) {
-		enemies.push_back(enemy.createEnemies());
-	}
+		if (enemies.size() <= 118) {
+			Enemy* newEnemy = enemy.createEnemies();
+			newEnemy->setX(rand() % 119);
+			newEnemy->setY(2);
+			newEnemy->setSlowEnemySpeed(100, getLevel());
+			enemies.push_back(newEnemy);
+		}
 }
 
 
@@ -78,6 +86,7 @@ void Game::input() {
 }
 
 void Game::update() {
+
 	for (auto it = bullets.begin(); it != bullets.end(); ) {
 		auto b = *it;
 		b->update();

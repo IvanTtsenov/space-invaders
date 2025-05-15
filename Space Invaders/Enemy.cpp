@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "Game.h"
 #include <iostream>
 using namespace std;
 Enemy::Enemy() {
@@ -23,14 +24,42 @@ int Enemy::getDirection() const {
 void Enemy::setDirection(int direction) {
 	this->direction = direction;
 }
-void Enemy::update() {
-	draw_char(' ', getY(), getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
-	setY(getY() + getDirection());
 
-	if (getY() <= 29) {
-		render();
+int Enemy::getUpdateCounter() const {
+	return updateCounter;
+}
+
+void Enemy::setUpdateCounter(int updateCounter) {
+	this->updateCounter = updateCounter;
+}
+
+int Enemy::getSlowEnemySpeed() const {
+	return slowEnemySpeed;
+}
+
+void Enemy::setSlowEnemySpeed(int slowEnemySpeed, int level) {
+	if (level == 1) {
+		this->slowEnemySpeed = slowEnemySpeed;
 	}
+	else if (level == 2) {
+		this->slowEnemySpeed = slowEnemySpeed - 25;
+	}
+	else if (level == 3) {
+		this->slowEnemySpeed = slowEnemySpeed - 50;
+	}
+}
 
+void Enemy::update() {
+	updateCounter++;
+
+	if (updateCounter >= slowEnemySpeed) {
+		draw_char(' ', getY(), getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
+		setY(getY() + getDirection());
+		if (getY() <= 29) {
+			render();
+		}
+		updateCounter = 0;
+	}
 }
 
 void Enemy::render() {
