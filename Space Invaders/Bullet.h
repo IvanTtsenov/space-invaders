@@ -4,10 +4,11 @@ class Bullet : public GameObject
 {
 public:
 	Bullet();
+	Bullet(int x, int y, char symbol, COLORS color, int direction);
 	Bullet(Bullet& obj);
 	Bullet& operator=(const Bullet& other);
 
-	void update();
+	void update() override;
 	void render() override;
 
 	int getDirection() const;

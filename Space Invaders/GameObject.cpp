@@ -1,18 +1,19 @@
 #include "GameObject.h"
-#include <iostream>
 
 GameObject::GameObject() {
-
 };
+
+GameObject::GameObject(int x, int y, char symbol, COLORS color)
+	: x(x), y(y), symbol(symbol), color(color) {
+}
+
 
 GameObject::~GameObject() {
 }
 
-GameObject::GameObject(GameObject& obj) {
-	this->x = obj.x;
-	this->y = obj.y;
-	this->symbol = obj.symbol;
-	this->color = obj.color;
+GameObject::GameObject(const GameObject& obj)
+	: x(obj.x), y(obj.y), symbol(obj.symbol), color(obj.color) {
+
 }
 
 GameObject& GameObject::operator=(const GameObject& other) {
@@ -50,7 +51,6 @@ char GameObject::getSymbol() const {
 }
 
 void GameObject::update() {
-	// Update logic for GameObject
 }
 
 void GameObject::setColor(COLORS color) {

@@ -4,11 +4,12 @@ class Enemy : public GameObject
 {
 public:
 	Enemy();
-	Enemy(Enemy& obj);
+	Enemy(int x, int y, char symbol, COLORS color, int direction, int updateCounter, int slowEnemySpeed);
+	Enemy(const Enemy& obj);
+	virtual ~Enemy();
 	Enemy& operator=(const Enemy& other);
-	Enemy* createEnemies();
-	void update();
-	void render();
+	void update() override;
+	void render() override;
 	int getDirection() const;
 	void setDirection(int direction);
 	int getUpdateCounter() const;
@@ -17,8 +18,6 @@ public:
 	void setSlowEnemySpeed(int slowEnemySpeed, int level);
 private:
 	int direction;
-	int updateCounter = 0;
-	int slowEnemySpeed = 100;
+	int updateCounter;
+	int slowEnemySpeed;
 };
-
-//Наследници: -EnemyType1, EnemyType2, EnemyType3, EnemyType4(различни визуализации)

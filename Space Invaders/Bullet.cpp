@@ -1,16 +1,19 @@
 #include "Bullet.h"
-#include <iostream>
-Bullet::Bullet() {
-	setSymbol('^');
-	setColor(RED);
+
+Bullet::Bullet() : GameObject(),direction(-1) {
 };
 
-Bullet::Bullet(Bullet& obj) {
-	this->direction = obj.direction;
+Bullet::Bullet(int x, int y, char symbol, COLORS color, int direction)
+	: GameObject(x, y, symbol, color), direction(direction) {
+}
+
+Bullet::Bullet(Bullet& obj)
+	:GameObject(obj), direction(obj.direction){
 }
 
 Bullet& Bullet::operator=(const Bullet& other) {
 	if (this != &other) {
+		GameObject::operator=(other);
 		direction = other.direction;
 	}
 	return *this;
@@ -30,7 +33,7 @@ void Bullet::render() {
 
 void Bullet::update() {
 	draw_char(' ', getY(), getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
-	setY(getY() + getDirection());
+	setY(getY() + direction);
 
 	if (getY() >= 2) {
 		render();

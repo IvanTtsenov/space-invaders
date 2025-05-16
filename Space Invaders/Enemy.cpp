@@ -1,18 +1,25 @@
 #include "Enemy.h"
-#include "Game.h"
-#include <iostream>
-using namespace std;
-Enemy::Enemy() {
 
-};
+Enemy::Enemy() 
+	: GameObject(), direction(1), updateCounter(0), slowEnemySpeed(100) {
 
-Enemy::Enemy(Enemy& obj) {
-	this->direction = obj.direction;
 }
+
+Enemy::~Enemy(){}
+
+Enemy::Enemy(int x, int y, char symbol, COLORS color, int direction, int updateCounter, int slowEnemySpeed)
+:GameObject(x,y,symbol,color),direction(direction),updateCounter(updateCounter),slowEnemySpeed(slowEnemySpeed){}
+
+
+Enemy::Enemy(const Enemy& obj)
+	:GameObject(obj), direction(obj.direction), updateCounter(obj.updateCounter), slowEnemySpeed(obj.slowEnemySpeed) {}
 
 Enemy& Enemy::operator=(const Enemy& other) {
 	if (this != &other) {
+		GameObject::operator=(other);
 		direction = other.direction;
+		updateCounter = other.updateCounter;
+		slowEnemySpeed = other.slowEnemySpeed;
 	}
 	return *this;
 }
@@ -51,11 +58,10 @@ void Enemy::setSlowEnemySpeed(int slowEnemySpeed, int level) {
 
 void Enemy::update() {
 	updateCounter++;
-
 	if (updateCounter >= slowEnemySpeed) {
 		draw_char(' ', getY(), getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
 		setY(getY() + getDirection());
-		if (getY() <= 29) {
+		if (getY() <= POLE_ROWS) {
 			render();
 		}
 		updateCounter = 0;
@@ -64,14 +70,4 @@ void Enemy::update() {
 
 void Enemy::render() {
 	draw_char(getSymbol(), getY(), getX(), getColor(), BACKGROUND_COLOR);
-}
-
-Enemy* Enemy::createEnemies() {
-	Enemy* enemy = new Enemy();
-	enemy->setX(0 + getDirection());
-	enemy->setY(2);
-	enemy->setDirection(1);
-	enemy->setSymbol('K');
-	enemy->setColor(BLUE);
-	return enemy;
 }

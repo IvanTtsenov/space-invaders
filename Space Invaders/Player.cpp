@@ -1,22 +1,19 @@
 #include "Player.h"
-#include <iostream>
-#include "visualisation.h"
 using namespace std;
-Player::Player() {
-	setSymbol('A');
-	setX(118 / 2);
-	setY(29);
-	setColor(GREEN);
-	setLives(3);
+Player::Player() : GameObject(), lives(3), score(0) {
+
 };
 
-Player::Player(const Player& obj) {
-	this->lives = obj.lives;
-	this->score = obj.score;
+Player::Player(int x, int y, char symbol, COLORS color, int lives, int score)
+	: GameObject(x, y, symbol, color), lives(lives), score(score) {
+}
+
+Player::Player(const Player& obj) :GameObject(obj), lives(obj.lives), score(obj.score) {
 }
 
 Player& Player::operator=(const Player& other) {
 	if (this != &other) {
+		GameObject::operator=(other);
 		lives = other.lives;
 		score = other.score;
 	}
@@ -37,27 +34,21 @@ Player Player::operator-(int points) const {
 
 void Player::moveLeft() {
 	if (getX() > 0) {
-	// Check if not at the left edge
-	setX(getX() - 1); // Move left
-	}
+		draw_char(' ', getY(), getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
 
+		setX(getX() - 1);
+	}
 }
 
 void Player::moveRight() {
-	if (getX() < POLE_COLS) { // Check if not at the right edge
-		setX(getX() + 1); // Move right
+	if (getX() < POLE_COLS) { 
+		draw_char(' ', getY(), getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
+		setX(getX() + 1);
 	}
 }
- 
-//Bullet* Player::shoot() {
-//	return new Bullet(); // Shoot upwards
-//}
 
 Bullet* Player::shoot() {
-	Bullet* b = new Bullet();
-	b->setX(this->getX());     
-	b->setY(this->getY() - 1);  
-	b->setDirection(-1);
+	Bullet* b = new Bullet(getX(),getY(),'^',RED,-1);
 	return b;
 }
 

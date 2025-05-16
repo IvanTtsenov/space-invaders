@@ -1,18 +1,15 @@
-#include <iostream>
-#include <conio.h>
-#include <cstdlib>
-#include <ctime>
 #include "Game.h"
-#include "visualisation.h"
-#include "Bullet.h"
-#include "Player.h"
 
-Game::Game() {
-	setLevel(1);
-
+Game::Game(): player(POLE_COLS / 2, POLE_ROWS, 'A', GREEN, 3, 0), score(0), level(1), running(true){
 }
 
-Game::Game(Game& obj) {
+Game::~Game() {
+	for (auto b : bullets) delete b;
+	for (auto e : enemies) delete e;
+}
+
+
+Game::Game(const Game& obj) {
 	this->player = obj.player;
 	this->enemies = obj.enemies;
 	this->bullets = obj.bullets;
@@ -46,13 +43,23 @@ int Game::getLevel() const {
 }
 
 void Game::initializeEnemies() {
-		if (enemies.size() <= 118) {
-			Enemy* newEnemy = enemy.createEnemies();
-			newEnemy->setX(rand() % 119);
-			newEnemy->setY(2);
-			newEnemy->setSlowEnemySpeed(100, getLevel());
-			enemies.push_back(newEnemy);
+
+	for (int i = 0; i < POLE_COLS; i++) {
+		Enemy* newEnemy = nullptr;
+		if (i % 2 == 0) {	
+			newEnemy = new EnemyType1(rand() % 119,2, '#', YELLOW, 1,0,100);
 		}
+		else if (i % 3 == 0) {
+			newEnemy = new EnemyType2(rand() % 119, 2, '&',BLUE,1,0,100);
+		}
+		else if (i % 5 == 0) {
+			newEnemy = new EnemyType3(rand() % 119, 2, '$', PINK, 1, 0, 100);
+		}
+		else {
+			newEnemy = new EnemyType4(rand() % 119, 2, '@', RED, 1, 0, 100);
+		}
+			enemies.push_back(newEnemy);
+	}
 }
 
 
@@ -113,7 +120,6 @@ void Game::update() {
 	}
 
 void Game::checkCollisions() {
-	// Check for collisions here
 }
 
 void Game::render() {
@@ -124,14 +130,14 @@ void Game::run()
 {
 	cout <<"Level: " << getLevel() << string((118 - 36) / 2, ' ') << "Score: " << player.getScore() << "     " << "Lives: " << player.getLives() << endl;
 	cout << string(118, '-') << endl;
-	setRunning(true);
-	while (isRunning())
+	initializeEnemies();
+
+	while (running)
 	{
 		render();
 		input();
 		update();
 		checkCollisions();
-		initializeEnemies();
 		Sleep(10);
 	}
 }

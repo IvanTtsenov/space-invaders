@@ -2,13 +2,23 @@
 #include "Player.h"
 #include "GameObject.h"
 #include <vector>
-#include "Enemy.h"
+#include <conio.h>
+#include <cstdlib>
+#include <ctime>
+#include "visualisation.h"
+#include "Bullet.h"
+#include "EnemyType1.h"
+#include "EnemyType2.h"
+#include "EnemyType3.h"
+#include "EnemyType4.h"
+
 using namespace std;
 class Game
 {
 public:
 	Game();
-	Game(Game& obj);
+	Game(const Game& obj);
+	~Game();
 
 	void initializeEnemies();
 	void input();
@@ -25,7 +35,6 @@ public:
 	int getLevel() const;
 
 private:
-	Enemy enemy;
 	Player player;
 	vector<GameObject*> enemies;
 	vector<GameObject*> bullets;

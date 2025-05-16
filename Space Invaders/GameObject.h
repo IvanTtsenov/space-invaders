@@ -1,12 +1,14 @@
 #pragma once
 #include <string>
 #include "visualisation.h"
+#include <iostream>
 using namespace std;
 class GameObject
 {
 public:
     GameObject();
-    GameObject(GameObject& obj);
+    GameObject(int x, int y, char symbol, COLORS color);
+    GameObject(const GameObject& obj);
     GameObject& operator=(const GameObject& other);
     virtual ~GameObject();
 
