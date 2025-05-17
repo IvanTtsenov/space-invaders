@@ -58,7 +58,7 @@ void Enemy::setSlowEnemySpeed(int slowEnemySpeed, int level) {
 
 void Enemy::update() {
 	updateCounter++;
-	if (updateCounter >= slowEnemySpeed) {
+	if (updateCounter >= 10) {
 		draw_char(' ', getY(), getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
 		setY(getY() + getDirection());
 		if (getY() <= POLE_ROWS) {

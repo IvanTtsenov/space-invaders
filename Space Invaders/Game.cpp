@@ -5,7 +5,10 @@ Game::Game(): player(POLE_COLS / 2, POLE_ROWS, 'A', GREEN, 3, 0), score(0), leve
 
 Game::~Game() {
 	for (auto b : bullets) delete b;
+	bullets.clear();
 	for (auto e : enemies) delete e;
+	enemies.clear();
+
 }
 
 
@@ -47,18 +50,19 @@ void Game::initializeEnemies() {
 	for (int i = 0; i < POLE_COLS; i++) {
 		Enemy* newEnemy = nullptr;
 		if (i % 2 == 0) {	
-			newEnemy = new EnemyType1(rand() % 119,2, '#', YELLOW, 1,0,100);
+			newEnemy = new EnemyType1(rand() % POLE_COLS + 1,2, '#', YELLOW, 1, 0, 100);
 		}
 		else if (i % 3 == 0) {
-			newEnemy = new EnemyType2(rand() % 119, 2, '&',BLUE,1,0,100);
+			newEnemy = new EnemyType2(rand() % POLE_COLS +1, 2, '&',BLUE,1,0,100);
 		}
 		else if (i % 5 == 0) {
-			newEnemy = new EnemyType3(rand() % 119, 2, '$', PINK, 1, 0, 100);
+			newEnemy = new EnemyType3(rand() % POLE_COLS+1, 2, '$', PINK, 1, 0, 100);
 		}
 		else {
-			newEnemy = new EnemyType4(rand() % 119, 2, '@', RED, 1, 0, 100);
+			newEnemy = new EnemyType4(rand() % POLE_COLS+1, 2, '@', RED, 1, 0, 100);
 		}
 			enemies.push_back(newEnemy);
+			newEnemy->render();
 	}
 }
 
@@ -106,9 +110,20 @@ void Game::update() {
 		}
 	}
 
+	bool newRow = false;
 		for (auto it = enemies.begin(); it != enemies.end(); ) {
 			auto e = *it;
+			int oldY = e->getY();
 			e->update();
+			if (e->getY() != oldY) {
+				newRow = true;
+			}
+			if (e->getX() == player.getX() && e->getY() == player.getY()) {
+				setRunning(false);
+				system("cls");
+				setRunning(true);
+			}
+
 			if (e->getY() > 29) {
 				delete e;
 				it = enemies.erase(it);
@@ -117,9 +132,41 @@ void Game::update() {
 				++it;
 			}
 		}
+
+		if (newRow && rows < 4) {
+			initializeEnemies();
+			rows++;
+		}
 	}
 
 void Game::checkCollisions() {
+	for (auto bulletIt = bullets.begin(); bulletIt != bullets.end(); ) {
+		auto b = *bulletIt;
+		bool bulletDeleted = false;
+
+		for (auto enemyIt = enemies.begin(); enemyIt != enemies.end(); ) {
+			auto e = *enemyIt;
+
+			if (b->getX() == e->getX() && b->getY() == e->getY()) {
+				// Collision detected
+				score += 10;
+				player.setScore(score);// Add points
+				delete e;
+				enemyIt = enemies.erase(enemyIt);
+				delete b;
+				bulletIt = bullets.erase(bulletIt);
+				bulletDeleted = true;
+				break;  // Bullet is gone, move to next bullet
+			}
+			else {
+				++enemyIt;
+			}
+		}
+
+		if (!bulletDeleted) {
+			++bulletIt;
+		}
+	}
 }
 
 void Game::render() {
@@ -132,10 +179,10 @@ void Game::run()
 	cout << string(118, '-') << endl;
 	initializeEnemies();
 
-	while (running)
+	while (isRunning())
 	{
-		render();
 		input();
+		render();
 		update();
 		checkCollisions();
 		Sleep(10);

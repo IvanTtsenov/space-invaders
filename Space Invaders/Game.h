@@ -40,6 +40,7 @@ private:
 	vector<GameObject*> bullets;
 	int score;
 	int level;
+	int rows = 0;
 	bool running;
 };
 
