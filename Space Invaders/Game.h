@@ -34,6 +34,8 @@ public:
 	void setLevel(int level);
 	int getLevel() const;
 
+	void resetGame();
+	void renderMenu();
 private:
 	Player player;
 	vector<GameObject*> enemies;
