@@ -49,10 +49,10 @@ void Enemy::setSlowEnemySpeed(int slowEnemySpeed, int level) {
 		this->slowEnemySpeed = slowEnemySpeed;
 	}
 	else if (level == 2) {
-		this->slowEnemySpeed = slowEnemySpeed - 25;
+		this->slowEnemySpeed = slowEnemySpeed - 50;
 	}
 	else if (level == 3) {
-		this->slowEnemySpeed = slowEnemySpeed - 50;
+		this->slowEnemySpeed = slowEnemySpeed - 75;
 	}
 }
 

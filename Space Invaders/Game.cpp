@@ -95,8 +95,7 @@ void Game::input() {
 	}
 }
 
-void Game::update() {
-
+void Game::updateEnemySpeed() {
 	if (score >= 500) {
 		setLevel(3);
 		for (auto e : enemies) {
@@ -115,6 +114,11 @@ void Game::update() {
 			}
 		}
 	}
+}
+
+void Game::update() {
+
+	updateEnemySpeed();
 
 	for (auto it = bullets.begin(); it != bullets.end(); ) {
 		auto b = *it;
@@ -158,7 +162,11 @@ void Game::update() {
 			}
 		}
 
-		if (newRow && rows < 4) {
+
+		if (newRow && rows < 5 || enemies.empty()) {
+			if (enemies.empty()) {
+				rows = 0;
+			}
 			initializeEnemies();
 			rows++;
 		}
@@ -236,7 +244,6 @@ void Game::run()
 	int newLevel = level;
 	int newLives = player.getLives();
 	renderMenu();
-	initializeEnemies();
 
 	while (isRunning())
 	{

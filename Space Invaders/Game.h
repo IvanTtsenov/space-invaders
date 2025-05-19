@@ -36,6 +36,8 @@ public:
 
 	void resetGame();
 	void renderMenu();
+	void updateEnemySpeed();
+
 private:
 	Player player;
 	vector<GameObject*> enemies;
