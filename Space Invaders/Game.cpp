@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game(): player(POLE_COLS / 2, POLE_ROWS, 'A', GREEN, 3, 0), score(0), level(1), running(true){
+Game::Game() : player(POLE_COLS / 2, POLE_ROWS, 'A', GREEN, 3, 0), score(0), level(1), running(true), rows(0), addedLive(true) {
 }
 
 Game::~Game() {
@@ -10,7 +10,7 @@ Game::~Game() {
 	enemies.clear();
 
 }
-
+//Tuka ne se pravi deep copy na enemies i bullets !!!!!!! PROVERKA
 Game::Game(const Game& obj) {
 	this->player = obj.player;
 	this->enemies = obj.enemies;
@@ -195,12 +195,14 @@ void Game::checkCollisions() {
 					score += 40;
 				}
 				setScore(score);
+				draw_char(' ', e->getY(), e->getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
 				delete e;
 				enemyIt = enemies.erase(enemyIt);
+				draw_char(' ', b->getY(), b->getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
 				delete b;
 				bulletIt = bullets.erase(bulletIt);
 				bulletDeleted = true;
-				break;  // Bullet is gone, move to next bullet
+				break;
 			}
 			else {
 				++enemyIt;
@@ -231,8 +233,16 @@ void Game::resetGame() {
 	enemies.clear();
 
 	player = Player(POLE_COLS / 2, POLE_ROWS, 'A', GREEN, player.getLives(), getScore());
-	score = getScore();
-	level = getLevel();
+	if (player.getLives() != 0) {
+		score = getScore();
+		level = getLevel();
+	}
+	else {
+		score = 0;
+		level = 1;
+		player.setLives(3);
+		addedLive = true;
+	}
 	rows = 0;
 	running = true;
 	renderMenu();
@@ -248,10 +258,14 @@ void Game::run()
 	while (isRunning())
 	{
 		input();
-		render();
 		update();
 		checkCollisions();
+		render();
 		if (newScore != score || newLevel != level || newLives != player.getLives()) {
+			if (score >= 300 && addedLive) {
+				player.setLives(player.getLives() + 1);
+				addedLive = false;
+			}
 			newScore = score;
 			newLevel = level;
 			newLives = player.getLives();
@@ -261,7 +275,7 @@ void Game::run()
 	}
 
 	system("cls");
-	if (player.getLives() <= 0) {
+	if (player.getLives() == 0) {
 		// Game over
 		cout << "Game Over! Final Score: " << player.getScore() << endl;
 		cout << "Press R to restart or Q to quit." << endl;
@@ -270,11 +284,11 @@ void Game::run()
 				int key = _getch();
 				if (key == 'r' || key == 'R') {
 					resetGame();
-					run(); // Restart the game
+					run();
 					break;
 				}
 				else if (key == 'q' || key == 'Q') {
-					break; // Exit the game
+					break;
 				}
 			}
 		}

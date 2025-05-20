@@ -46,5 +46,6 @@ private:
 	int level;
 	int rows = 0;
 	bool running;
+	bool addedLive;
 };
 
