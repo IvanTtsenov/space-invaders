@@ -31,11 +31,20 @@ void Bullet::render() {
 	draw_char(getSymbol(), getY(), getX(), getColor(), BACKGROUND_COLOR);
 }
 
+void Bullet::Enemyshoot() {
+
+		draw_char(' ', getY(), getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
+		setY(getY() + getDirection());
+		if (getY() >= 2 && getY() <= POLE_ROWS) {
+			render();
+		}
+}
+
 void Bullet::update() {
 	draw_char(' ', getY(), getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
 	setY(getY() + direction);
 
-	if (getY() >= 2) {
+	if (getY() >= 2 && getY() <= POLE_ROWS) {
 		render();
 	}
 }

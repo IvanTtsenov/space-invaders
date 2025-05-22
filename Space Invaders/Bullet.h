@@ -10,6 +10,7 @@ public:
 
 	void update() override;
 	void render() override;
+	void Enemyshoot();
 
 	int getDirection() const;
 	void setDirection(int direction);

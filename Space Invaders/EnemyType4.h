@@ -4,6 +4,6 @@ class EnemyType4 : public Enemy
 {
 public:
 	EnemyType4();
-	EnemyType4(int x, int y, char symbol, COLORS color, int direction, int updateCounter, int slowEnemySpeed);
+	EnemyType4(int x, int y, char symbol, COLORS color, int direction);
 };
 

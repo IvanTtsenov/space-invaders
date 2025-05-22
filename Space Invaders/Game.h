@@ -42,10 +42,15 @@ private:
 	Player player;
 	vector<GameObject*> enemies;
 	vector<GameObject*> bullets;
+	vector<GameObject*> enemyBul;
 	int score;
 	int level;
 	int rows = 0;
 	bool running;
 	bool addedLive;
+	int enemyMoveTimer = 0;
+	int enemyBulletTimer = 0;
+	int currentEnemySpeed = 100;
+	int currentEnemyBulletSpeed = 30;
 };
 
