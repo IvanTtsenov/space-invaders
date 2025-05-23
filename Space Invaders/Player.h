@@ -5,6 +5,7 @@ class Player : public GameObject
 {
 public:
 	Player();
+	~Player();
 	Player(int x, int y, char symbol, COLORS color, int lives, int score);
 	Player(const Player& obj);
 	Player& operator=(const Player& other);

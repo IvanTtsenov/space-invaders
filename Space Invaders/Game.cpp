@@ -13,15 +13,6 @@ Game::~Game() {
 	for (auto eBul : enemyBul) delete eBul;
 	enemyBul.clear();
 }
-//Tuka ne se pravi deep copy na enemies i bullets !!!!!!! PROVERKA
-Game::Game(const Game& obj) {
-	this->player = obj.player;
-	this->enemies = obj.enemies;
-	this->bullets = obj.bullets;
-	this->score = obj.score;
-	this->level = obj.level;
-	this->running = obj.running;
-}
 
 void Game::setRunning(bool running) {
 	this->running = running;
@@ -93,9 +84,8 @@ void Game::input() {
 				}
 				else if (key == 72) {
 					bullets.push_back(player.shoot());
-
 			}
-			draw_char(player.getSymbol(), player.getY(), player.getX(), player.getColor(), BACKGROUND_COLOR);
+			//draw_char(player.getSymbol(), player.getY(), player.getX(), player.getColor(), BACKGROUND_COLOR);
 		}
 	}
 }
@@ -117,7 +107,6 @@ void Game::updateEnemySpeed() {
 		currentEnemyBulletSpeed = 30;
 	}
 }
-
 
 void Game::update() {
 	updateEnemySpeed();
@@ -150,6 +139,7 @@ void Game::update() {
 			if (e->getX() == player.getX() && e->getY() == player.getY()) {
 					player.setLives(player.getLives() - 1);
 					setRunning(false);
+					break;
 			}
 
 			if (e->getY() > POLE_ROWS) {
@@ -348,8 +338,8 @@ void Game::run()
 	while (isRunning())
 	{
 		input();
-		update();
 		checkCollisions();
+		update();
 		render();
 		if (newScore != score || newLevel != level || newLives != player.getLives()) {
 			if (score >= 300 && addedLive) {

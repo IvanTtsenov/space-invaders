@@ -4,8 +4,9 @@ class Bullet : public GameObject
 {
 public:
 	Bullet();
+	~Bullet();
 	Bullet(int x, int y, char symbol, COLORS color, int direction);
-	Bullet(Bullet& obj);
+	Bullet(const Bullet& obj);
 	Bullet& operator=(const Bullet& other);
 
 	void update() override;

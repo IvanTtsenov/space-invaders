@@ -13,7 +13,6 @@ GameObject::~GameObject() {
 
 GameObject::GameObject(const GameObject& obj)
 	: x(obj.x), y(obj.y), symbol(obj.symbol), color(obj.color) {
-
 }
 
 GameObject& GameObject::operator=(const GameObject& other) {

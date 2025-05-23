@@ -3,11 +3,13 @@
 Bullet::Bullet() : GameObject(),direction(-1) {
 };
 
+Bullet::~Bullet() {};
+
 Bullet::Bullet(int x, int y, char symbol, COLORS color, int direction)
 	: GameObject(x, y, symbol, color), direction(direction) {
 }
 
-Bullet::Bullet(Bullet& obj)
+Bullet::Bullet(const Bullet& obj)
 	:GameObject(obj), direction(obj.direction){
 }
 

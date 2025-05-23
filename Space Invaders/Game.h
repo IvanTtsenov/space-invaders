@@ -17,7 +17,6 @@ class Game
 {
 public:
 	Game();
-	Game(const Game& obj);
 	~Game();
 
 	void initializeEnemies();

@@ -1,14 +1,16 @@
 #include "Player.h"
 using namespace std;
 Player::Player() : GameObject(), lives(3), score(0) {
-
 };
+
+Player::~Player() {};
 
 Player::Player(int x, int y, char symbol, COLORS color, int lives, int score)
 	: GameObject(x, y, symbol, color), lives(lives), score(score) {
 }
 
-Player::Player(const Player& obj) :GameObject(obj), lives(obj.lives), score(obj.score) {
+Player::Player(const Player& obj) 
+	:GameObject(obj), lives(obj.lives), score(obj.score) {
 }
 
 Player& Player::operator=(const Player& other) {

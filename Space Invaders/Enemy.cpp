@@ -2,7 +2,6 @@
 
 Enemy::Enemy() 
 	: GameObject(), direction(1) {
-
 }
 
 Enemy::~Enemy(){}
