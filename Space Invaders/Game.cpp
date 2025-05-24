@@ -2,7 +2,7 @@
 
 Game::Game() 
 	: player(POLE_COLS / 2, POLE_ROWS, 'A', GREEN, 3, 0), score(0), level(1), running(true), rows(0), addedLive(true), enemyMoveTimer(0),
-	  currentEnemySpeed(100), currentEnemyBulletSpeed(30), enemyBulletTimer(0){
+	  currentEnemySpeed(100), currentEnemyBulletSpeed(30), enemyBulletTimer(0), winCondition(false){
 }
 
 Game::~Game() {
@@ -93,8 +93,8 @@ void Game::input() {
 void Game::updateEnemySpeed() {
 	if (score >= 500) {
 		level = 3;
-		currentEnemySpeed = 50;
-		currentEnemyBulletSpeed = 10;
+		currentEnemySpeed = 500;
+		currentEnemyBulletSpeed = 100;
 	}
 	else if (score >= 200) {
 		level = 2;
@@ -221,6 +221,12 @@ void Game::update() {
 		}
 
 		if (newRow && rows < 5 || enemies.empty()) {
+			if (enemies.empty() && level == 3) {
+				winCondition = true;
+				setRunning(false);
+				return;
+			}
+
 			if (enemies.empty()) {
 				rows = 0;
 			}
@@ -323,8 +329,10 @@ void Game::resetGame() {
 		player.setLives(3);
 		addedLive = true;
 	}
+
 	rows = 0;
 	running = true;
+	winCondition = false;
 	renderMenu();
 }
 
@@ -355,19 +363,26 @@ void Game::run()
 	}
 
 	system("cls");
-	if (player.getLives() == 0) {
-		cout << "Game Over! Final Score: " << getScore() << endl;
-		cout << "Press R to restart or Q to quit." << endl;
+	if (player.getLives() == 0 || winCondition) {
+		if (winCondition) {
+			cout << "Congratulations! You have won! Final Score: " << getScore() << endl;
+			return;
+		}
+		else {
+			cout << "Game Over! Final Score: " << getScore() << endl;
+			cout << "Press R to restart or Q to quit." << endl;
+		}
+
 		while (true) {
 			if (_kbhit()) {
 				int key = _getch();
 				if (key == 'r' || key == 'R') {
 					resetGame();
 					run();
-					break;
+					return;
 				}
 				else if (key == 'q' || key == 'Q') {
-					break;
+					return;
 				}
 			}
 		}
@@ -375,5 +390,6 @@ void Game::run()
 	else {
 		resetGame();
 		run();
+
 	}
 }

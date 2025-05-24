@@ -47,6 +47,7 @@ private:
 	int rows = 0;
 	bool running;
 	bool addedLive;
+	bool winCondition;
 	int enemyMoveTimer = 0;
 	int enemyBulletTimer = 0;
 	int currentEnemySpeed = 100;
