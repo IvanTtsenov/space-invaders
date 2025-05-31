@@ -1,10 +1,11 @@
 #pragma once
-#include "Player.h"
-#include "GameObject.h"
 #include <vector>
 #include <conio.h>
 #include <cstdlib>
 #include <ctime>
+#include <set>
+#include "Player.h"
+#include "GameObject.h"
 #include "visualisation.h"
 #include "Bullet.h"
 #include "EnemyType1.h"
@@ -48,6 +49,7 @@ private:
 	bool running;
 	bool addedLive;
 	bool winCondition;
+	bool enemiesReachedEnd;
 	int enemyMoveTimer = 0;
 	int enemyBulletTimer = 0;
 	int currentEnemySpeed = 100;

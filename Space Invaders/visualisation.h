@@ -1,7 +1,7 @@
 #pragma once
 #include <windows.h>
 const int POLE_ROWS = 29;
-const int POLE_COLS = 20;
+const int POLE_COLS = 118;
 extern HANDLE hConsoleOutput;
 
 enum COLORS {

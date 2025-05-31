@@ -2,7 +2,7 @@
 
 Game::Game() 
 	: player(POLE_COLS / 2, POLE_ROWS, 'A', GREEN, 3, 0), score(0), level(1), running(true), rows(0), addedLive(true), enemyMoveTimer(0),
-	  currentEnemySpeed(100), currentEnemyBulletSpeed(30), enemyBulletTimer(0), winCondition(false){
+	  currentEnemySpeed(100), currentEnemyBulletSpeed(30), enemyBulletTimer(0), winCondition(false), enemiesReachedEnd(false){
 }
 
 Game::~Game() {
@@ -40,20 +40,30 @@ int Game::getLevel() const {
 
 void Game::initializeEnemies() {
 
+	set<int> uniqueX;
+
 	for (int i = 0; i < POLE_COLS; i++) {
 		Enemy* newEnemy = nullptr;
 
+		int x;
+
+		do {
+			x = rand() % POLE_COLS + 1;
+		} while (uniqueX.find(x) != uniqueX.end());
+
+		uniqueX.insert(x);
+
 			if (i % 2 == 0) {
-				newEnemy = new EnemyType1(rand() % POLE_COLS + 1, 2, '#', YELLOW, 1);
+				newEnemy = new EnemyType1(x, 2, '#', YELLOW, 1);
 			}
 			else if (i % 3 == 0) {
-				newEnemy = new EnemyType2(rand() % POLE_COLS + 1, 2, '&', BLUE, 1);
+				newEnemy = new EnemyType2(x, 2, '&', BLUE, 1);
 			}
 			else if (i % 5 == 0) {
-				newEnemy = new EnemyType3(rand() % POLE_COLS + 1, 2, '$', PINK, 1);
+				newEnemy = new EnemyType3(x, 2, '$', PINK, 1);
 			}
 			else {
-				newEnemy = new EnemyType4(rand() % POLE_COLS + 1, 2, '@', RED, 1);
+				newEnemy = new EnemyType4(x, 2, '@', RED, 1);
 			}
 
 			enemies.push_back(newEnemy);
@@ -93,8 +103,8 @@ void Game::input() {
 void Game::updateEnemySpeed() {
 	if (score >= 500) {
 		level = 3;
-		currentEnemySpeed = 500;
-		currentEnemyBulletSpeed = 100;
+		currentEnemySpeed = 50;
+		currentEnemyBulletSpeed = 10;
 	}
 	else if (score >= 200) {
 		level = 2;
@@ -143,6 +153,7 @@ void Game::update() {
 			}
 
 			if (e->getY() > POLE_ROWS) {
+				enemiesReachedEnd = true;
 				delete e;
 				it = enemies.erase(it);
 			}
@@ -221,7 +232,7 @@ void Game::update() {
 		}
 
 		if (newRow && rows < 5 || enemies.empty()) {
-			if (enemies.empty() && level == 3) {
+			if (enemies.empty() && level == 3 && !enemiesReachedEnd) {
 				winCondition = true;
 				setRunning(false);
 				return;
