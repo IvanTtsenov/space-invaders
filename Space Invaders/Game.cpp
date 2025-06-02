@@ -199,7 +199,7 @@ void Game::update() {
 		}
 
 		for (auto it = enemyBul.begin(); it != enemyBul.end();) {
-			Bullet* b = dynamic_cast<Bullet*>(*it);
+			auto b = *it;
 
 			if (enemyBulletTimer >= currentEnemyBulletSpeed) {
 				b->Enemyshoot();
@@ -207,10 +207,12 @@ void Game::update() {
 
 			if (b->getX() == player.getX() && b->getY() == player.getY()) {
 					player.setLives(player.getLives() - 1);
-				if (player.getLives() != 0) {
+
 					draw_char(' ', b->getY(), b->getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
 					delete b;
 					it = enemyBul.erase(it);
+
+				if (player.getLives() != 0) {
 					player.setX(POLE_COLS / 2);
 					player.setY(POLE_ROWS);
 					break;

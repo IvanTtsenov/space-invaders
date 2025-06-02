@@ -42,7 +42,7 @@ private:
 	Player player;
 	vector<GameObject*> enemies;
 	vector<GameObject*> bullets;
-	vector<GameObject*> enemyBul;
+	vector<Bullet*> enemyBul;
 	int score;
 	int level;
 	int rows = 0;
