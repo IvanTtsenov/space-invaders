@@ -43,7 +43,7 @@ void Game::initializeEnemies() {
 
 	set<int> uniqueX;
 
-	for (int i = 0; i < POLE_COLS; i++) {
+	for (int i = 0; i < POLE_COLS - (rand() % 15 + 1) ; i++) {
 		Enemy* newEnemy = nullptr;
 
 		int x;
@@ -179,11 +179,11 @@ void Game::update() {
 			for (auto e : enemies) {
 				if (enemyBul.size() < 8) {
 					bool canShoot = true;
-					for (auto other : enemies) {
-						if (other == e) continue;
+					for (auto frontEnemies : enemies) {
+						if (frontEnemies == e) continue;
 
 						// Same X (column) and is below the current enemy
-						if (other->getX() == e->getX() && other->getY() > e->getY()) {
+						if (frontEnemies->getX() == e->getX() && frontEnemies->getY() > e->getY()) {
 							canShoot = false;
 							break;
 						}
@@ -317,8 +317,8 @@ void Game::checkCollisions() {
 void Game::renderMenu() {
 	std::cout << "\033[" << 1 << ";1H";
 	std::cout << "\033[2K";
-	cout << "Level: " << getLevel() << string((118 - 36) / 2, ' ') << "Score: " << getScore() << "     " << "Lives: " << player.getLives() << endl;
-	cout << string(118, '-') << endl;
+	cout << "Level: " << getLevel() << string((POLE_COLS - 36) / 2, ' ') << "Score: " << getScore() << "     " << "Lives: " << player.getLives() << endl;
+	cout << string(POLE_COLS, '-') << endl;
 }
 
 void Game::render() {
@@ -345,9 +345,17 @@ void Game::resetGame() {
 		addedLive = true;
 	}
 	
+
+	enemyMoveTimer = 0;
+	enemyBulletTimer = 0;
+	shootTimer = 0;
 	rows = 0;
-	running = true;
 	winCondition = false;
+	enemiesReachedEnd = false;
+	currentEnemySpeed = 100;
+	currentEnemyBulletSpeed = 30;
+	shootChance = 10;
+	running = true;
 	renderMenu();
 }
 
