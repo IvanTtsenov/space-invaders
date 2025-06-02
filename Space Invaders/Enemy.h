@@ -8,8 +8,8 @@ public:
 	Enemy(const Enemy& obj);
 	virtual ~Enemy();
 	Enemy& operator=(const Enemy& other);
-	void update() override;
-	void render() override;
+	void update() override = 0;
+	void render() override = 0;
 	int getDirection() const;
 	void setDirection(int direction);
 

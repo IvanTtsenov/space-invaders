@@ -13,7 +13,7 @@ public:
     virtual ~GameObject();
 
     virtual void update();
-    virtual void render();
+    virtual void render() = 0;
     int getX() const;
     int getY() const;
     char getSymbol() const;

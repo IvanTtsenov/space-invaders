@@ -16,7 +16,6 @@ public:
 	void moveLeft();
 	void moveRight();
 	Bullet* shoot();
-
 	int getLives() const;
 	int getScore() const;
 

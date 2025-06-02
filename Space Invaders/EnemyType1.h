@@ -5,5 +5,7 @@ class EnemyType1 : public Enemy
 public:
 	EnemyType1();
 	EnemyType1(int x, int y, char symbol, COLORS color, int direction);
+	void update() override;
+	void render() override;
 };
 

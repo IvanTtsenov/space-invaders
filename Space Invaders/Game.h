@@ -52,7 +52,9 @@ private:
 	bool enemiesReachedEnd;
 	int enemyMoveTimer = 0;
 	int enemyBulletTimer = 0;
+	int shootTimer = 0;
 	int currentEnemySpeed = 100;
 	int currentEnemyBulletSpeed = 30;
+	int shootChance = 10;
 };
 

@@ -2,7 +2,8 @@
 
 Game::Game() 
 	: player(POLE_COLS / 2, POLE_ROWS, 'A', GREEN, 3, 0), score(0), level(1), running(true), rows(0), addedLive(true), enemyMoveTimer(0),
-	  currentEnemySpeed(100), currentEnemyBulletSpeed(30), enemyBulletTimer(0), winCondition(false), enemiesReachedEnd(false){
+	  currentEnemySpeed(100), currentEnemyBulletSpeed(30), enemyBulletTimer(0), winCondition(false), enemiesReachedEnd(false), shootTimer(0),
+	  shootChance(10){
 }
 
 Game::~Game() {
@@ -49,6 +50,7 @@ void Game::initializeEnemies() {
 
 		do {
 			x = rand() % POLE_COLS + 1;
+			//find връща uniqueX.end() ако не го намери
 		} while (uniqueX.find(x) != uniqueX.end());
 
 		uniqueX.insert(x);
@@ -105,16 +107,19 @@ void Game::updateEnemySpeed() {
 		level = 3;
 		currentEnemySpeed = 50;
 		currentEnemyBulletSpeed = 10;
+		shootChance = 50;
 	}
 	else if (score >= 200) {
 		level = 2;
 		currentEnemySpeed = 75;
 		currentEnemyBulletSpeed = 20;
+		shootChance = 30;
 	}
 	else {
 		level = 1;
 		currentEnemySpeed = 100;
 		currentEnemyBulletSpeed = 30;
+		shootChance = 10;
 	}
 }
 
@@ -166,7 +171,6 @@ void Game::update() {
 			enemyMoveTimer = 0;
 		}
 
-		static int shootTimer = 0;
 		shootTimer++;
 
 		if (shootTimer > 30) {
@@ -186,7 +190,7 @@ void Game::update() {
 					}
 
 				// 10% chance this enemy shoots a bullet
-					if (canShoot && rand() % 100 < 10) {
+					if (canShoot && rand() % 100 < shootChance) {
 						Bullet* b = new Bullet(e->getX(), e->getY() + 1, '|', BLUE, 1);
 						enemyBul.push_back(b);
 					}
@@ -340,7 +344,7 @@ void Game::resetGame() {
 		player.setLives(3);
 		addedLive = true;
 	}
-
+	
 	rows = 0;
 	running = true;
 	winCondition = false;
