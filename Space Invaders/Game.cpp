@@ -105,20 +105,20 @@ void Game::input() {
 void Game::updateEnemySpeed() {
 	if (score >= 500) {
 		level = 3;
-		currentEnemySpeed = 50;
-		currentEnemyBulletSpeed = 10;
+		currentEnemySpeed = 75;
+		currentEnemyBulletSpeed = 50;
 		shootChance = 50;
 	}
 	else if (score >= 200) {
 		level = 2;
-		currentEnemySpeed = 75;
-		currentEnemyBulletSpeed = 20;
+		currentEnemySpeed = 90;
+		currentEnemyBulletSpeed = 60;
 		shootChance = 30;
 	}
 	else {
 		level = 1;
 		currentEnemySpeed = 100;
-		currentEnemyBulletSpeed = 30;
+		currentEnemyBulletSpeed = 70;
 		shootChance = 10;
 	}
 }
@@ -154,7 +154,7 @@ void Game::update() {
 			if (e->getX() == player.getX() && e->getY() == player.getY()) {
 					player.setLives(player.getLives() - 1);
 					setRunning(false);
-					break;
+					return;
 			}
 
 			if (e->getY() > POLE_ROWS) {
@@ -177,7 +177,7 @@ void Game::update() {
 			shootTimer = 0;
 
 			for (auto e : enemies) {
-				if (enemyBul.size() < 8) {
+				if (enemyBul.size() < 8 && enemyBul.empty()) {
 					bool canShoot = true;
 					for (auto frontEnemies : enemies) {
 						if (frontEnemies == e) continue;
@@ -237,8 +237,9 @@ void Game::update() {
 			enemyBulletTimer = 0;
 		}
 
+
 		if (newRow && rows < 5 || enemies.empty()) {
-			if (enemies.empty() && level == 3 && !enemiesReachedEnd) {
+			if (enemies.empty() && level == 3 && enemiesReachedEnd == false && rows != 0) {
 				winCondition = true;
 				setRunning(false);
 				return;
@@ -319,7 +320,11 @@ void Game::checkCollisions() {
 void Game::renderMenu() {
 	std::cout << "\033[" << 1 << ";1H";
 	std::cout << "\033[2K";
-	cout << "Level: " << getLevel() << string((POLE_COLS - 36) / 2, ' ') << "Score: " << getScore() << "     " << "Lives: " << player.getLives() << endl;
+	//cout << "Level: " << getLevel() << string(max(0,(POLE_COLS - 36) / 2), ' ') << "Score: " << getScore() << "     " << "Lives: " << player.getLives() << endl;
+	cout << left << setw(10) << ("Level: " + to_string(getLevel()))
+		<< setw(11) << ("Score: " + to_string(getScore()))
+		<< right << setw(10) << ("Lives: " + to_string(player.getLives()))
+		<< endl;
 	cout << string(POLE_COLS, '-') << endl;
 }
 
@@ -347,7 +352,6 @@ void Game::resetGame() {
 		addedLive = true;
 	}
 	
-
 	enemyMoveTimer = 0;
 	enemyBulletTimer = 0;
 	shootTimer = 0;

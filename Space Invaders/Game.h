@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <set>
+#include <iomanip>
 #include "Player.h"
 #include "GameObject.h"
 #include "visualisation.h"

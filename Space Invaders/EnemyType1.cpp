@@ -14,6 +14,7 @@ void EnemyType1::update() {
 	}
 
 };
+
 void EnemyType1::render() {
 	draw_char(getSymbol(), getY(), getX(), getColor(), BACKGROUND_COLOR);
 };

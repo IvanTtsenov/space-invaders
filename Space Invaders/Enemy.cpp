@@ -29,14 +29,14 @@ void Enemy::setDirection(int direction) {
 	this->direction = direction;
 }
 
-void Enemy::update() {
-		draw_char(' ', getY(), getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
-		setY(getY() + getDirection());
-		if (getY() <= POLE_ROWS) {
-			render();
-		}
-	}
-
-void Enemy::render() {
-	draw_char(getSymbol(), getY(), getX(), getColor(), BACKGROUND_COLOR);
-}
+//void Enemy::update() {
+//		draw_char(' ', getY(), getX(), BACKGROUND_COLOR, BACKGROUND_COLOR);
+//		setY(getY() + getDirection());
+//		if (getY() <= POLE_ROWS) {
+//			render();
+//		}
+//	}
+//
+//void Enemy::render() {
+//	draw_char(getSymbol(), getY(), getX(), getColor(), BACKGROUND_COLOR);
+//}
