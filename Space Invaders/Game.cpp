@@ -73,7 +73,6 @@ void Game::initializeEnemies() {
 	}
 }
 
-
 void Game::input() {
 		if (_kbhit()) {
 			int key = _getch();
@@ -97,7 +96,6 @@ void Game::input() {
 				else if (key == 72) {
 					bullets.push_back(player.shoot());
 			}
-			//draw_char(player.getSymbol(), player.getY(), player.getX(), player.getColor(), BACKGROUND_COLOR);
 		}
 	}
 }
@@ -127,7 +125,7 @@ void Game::update() {
 	updateEnemySpeed();
 	enemyMoveTimer++;
 	enemyBulletTimer++;
-
+	enemiesReachedEnd = false;
 	for (auto it = bullets.begin(); it != bullets.end(); ) {
 		auto b = *it;
 		b->update();
@@ -151,6 +149,7 @@ void Game::update() {
 			if (e->getY() != oldY) {
 				newRow = true;
 			}
+
 			if (e->getX() == player.getX() && e->getY() == player.getY()) {
 					player.setLives(player.getLives() - 1);
 					setRunning(false);
@@ -177,21 +176,27 @@ void Game::update() {
 			shootTimer = 0;
 
 			for (auto e : enemies) {
-				if (enemyBul.size() < 8 && enemyBul.empty()) {
+				if (enemyBul.size() < 8) {
 					bool canShoot = true;
 					for (auto frontEnemies : enemies) {
 						if (frontEnemies == e) continue;
 
-						// Same X (column) and is below the current enemy
 						if (frontEnemies->getX() == e->getX() && frontEnemies->getY() > e->getY()) {
 							canShoot = false;
 							break;
 						}
 					}
 
-				// 10% chance this enemy shoots a bullet
-					if (canShoot && rand() % 100 < shootChance) {
-						Bullet* b = new Bullet(e->getX(), e->getY() + 1, '|', BLUE, 1);
+					bool bulletExistsInColumn = false;
+					for (auto existingBullet : enemyBul) {
+						if (existingBullet->getX() == e->getX()) {
+							bulletExistsInColumn = true;
+							break;
+						}
+					}
+
+					if (canShoot && rand() % 100 < shootChance && !bulletExistsInColumn) {
+						Bullet* b = new Bullet(e->getX(), e->getY() + 2, '|', BLUE, 1);
 						enemyBul.push_back(b);
 					}
 				}
