@@ -323,18 +323,26 @@ void Game::checkCollisions() {
 }
 
 void Game::renderMenu() {
-	std::cout << "\033[" << 1 << ";1H";
-	std::cout << "\033[2K";
+	cout << "\033[" << 1 << ";1H";
+	cout << "\033[2K";
 	//cout << "Level: " << getLevel() << string(max(0,(POLE_COLS - 36) / 2), ' ') << "Score: " << getScore() << "     " << "Lives: " << player.getLives() << endl;
 	cout << left << setw(10) << ("Level: " + to_string(getLevel()))
 		<< setw(11) << ("Score: " + to_string(getScore()))
 		<< right << setw(10) << ("Lives: " + to_string(player.getLives()))
 		<< endl;
-	cout << string(POLE_COLS, '-') << endl;
+	cout << string(POLE_COLS + 1, '-') << endl;
 }
 
 void Game::render() {
 	player.render();
+
+	for (int x = 0; x <= POLE_COLS; x++) {
+		draw_char('-', POLE_ROWS + 1, x, WHITE, BACKGROUND_COLOR);
+	}
+
+	for (int y = 2; y <= POLE_ROWS; y++) {
+		draw_char('|', y, POLE_COLS + 1, WHITE, BACKGROUND_COLOR);
+	}
 }
 
 void Game::resetGame() {
